@@ -9,13 +9,13 @@ import java.time.LocalDate;
  */
 public class Person {
     /** The person's full name. */
-    private String name;
+    private final String name;
 
     /** The person's date of birth. */
-    private LocalDate dateOfBirth;
+    private final LocalDate dateOfBirth;
 
     /** The person's email address. */
-    private String emailAddress;
+    private final String emailAddress;
 
     /** Whether the person has purchased a parking pass. */
     private boolean hasParkingPass;
@@ -89,14 +89,17 @@ public class Person {
     }
 
     /**
-     * Validates that the name is not null or empty.
+     * Validates that the name is not null, empty, or contains only whitespace.
      *
      * @param name The name to validate
-     * @throws IllegalArgumentException if the name is null or empty
+     * @throws IllegalArgumentException if the name is null, empty, or whitespace only
      */
     private void validateName(String name) {
-        if (name == null || name.trim().isEmpty()) {
-            throw new IllegalArgumentException("Name cannot be null or empty");
+        if (name == null) {
+            throw new IllegalArgumentException("Name cannot be null");
+        }
+        if (name.trim().isEmpty()) {
+            throw new IllegalArgumentException("Name cannot be empty or contain only whitespace");
         }
     }
 
@@ -119,11 +122,14 @@ public class Person {
      * Validates that the email address is not null, not empty, and contains an @ symbol.
      *
      * @param emailAddress The email address to validate
-     * @throws IllegalArgumentException if the email is invalid
+     * @throws IllegalArgumentException if the email is null, empty, or invalid format
      */
     private void validateEmailAddress(String emailAddress) {
-        if (emailAddress == null || emailAddress.trim().isEmpty()) {
-            throw new IllegalArgumentException("Email address cannot be null or empty");
+        if (emailAddress == null) {
+            throw new IllegalArgumentException("Email address cannot be null");
+        }
+        if (emailAddress.trim().isEmpty()) {
+            throw new IllegalArgumentException("Email address cannot be empty or contain only whitespace");
         }
         if (!emailAddress.contains("@")) {
             throw new IllegalArgumentException("Email address must contain @ symbol");
